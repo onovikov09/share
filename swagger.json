@@ -1,0 +1,321 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "Wallets",
+        "description": "Transfer wallet to wallet",
+        "version": "1.0.0"
+    },
+    "host": "alltest.rnd1.ru",
+    "basePath": "/api",
+    "schemes": [
+        "http"
+    ],
+    "consumes": [
+        "application/x-www-form-urlencoded"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/wallets?offset={offset}&limit={limit}": {
+            "get": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Get a list of wallets with a limit and offset.",
+                "parameters": [
+                    {
+                        "name": "offset",
+                        "in": "path",
+                        "description": "Offset",
+                        "type": "integer"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "path",
+                        "description": "Limit",
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Wallets list response"
+                    },
+                    "default": {
+                        "description": "an \"unexpected\" error"
+                    }
+                }
+            }
+        },
+        "/wallets_log?wallet_id={wallet_id}&offset={offset}&limit={limit}&dt_start={dt_start}&dt_end={dt_end}": {
+            "get": {
+                "tags": [
+                    "WalletLog"
+                ],
+                "summary": "Get a list of wallet log.",
+                "parameters": [
+                    {
+                        "name": "wallet_id",
+                        "in": "path",
+                        "description": "The ID of the wallet log",
+                        "type": "integer"
+                    },
+                    {
+                        "name": "offset",
+                        "in": "path",
+                        "description": "Offset",
+                        "type": "integer",
+                        "default": 0
+                    },
+                    {
+                        "name": "limit",
+                        "in": "path",
+                        "description": "Limit",
+                        "type": "integer",
+                        "default": 5
+                    },
+                    {
+                        "name": "dt_start",
+                        "in": "path",
+                        "description": "Date start period",
+                        "type": "string",
+                        "default": ""
+                    },
+                    {
+                        "name": "dt_end",
+                        "in": "path",
+                        "description": "Date end period",
+                        "type": "string",
+                        "default": ""
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Wallet_log list response"
+                    },
+                    "default": {
+                        "description": "an \"unexpected\" error"
+                    }
+                }
+            }
+        },
+        "/wallets": {
+            "post": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Register a new wallet.",
+                "parameters": [
+                    {
+                        "name": "full_name",
+                        "in": "formData",
+                        "description": "User full name",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "country_id",
+                        "in": "formData",
+                        "description": "Country id",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "city_id",
+                        "in": "formData",
+                        "description": "City id",
+                        "required": true,
+                        "type": "integer"
+                    },
+                    {
+                        "name": "currency_key",
+                        "in": "formData",
+                        "description": "Currency key",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Wallet item response"
+                    },
+                    "default": {
+                        "description": "an \"unexpected\" error"
+                    }
+                }
+            }
+        },
+        "/wallets?wallet_to={wallet_to}": {
+            "put": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Update wallet by number.",
+                "parameters": [
+                    {
+                        "name": "wallet_to",
+                        "in": "path",
+                        "description": "The unique number of the wallet for replenishment",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "wallet_from",
+                        "in": "formData",
+                        "description": "The unique number of the wallet, from where the transfer",
+                        "type": "string"
+                    },
+                    {
+                        "name": "sum",
+                        "in": "formData",
+                        "description": "Operation sum",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "currency_key",
+                        "in": "formData",
+                        "description": "Currency key",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Wallet item response"
+                    }
+                }
+            }
+        },
+        "/currency?key={key}": {
+            "put": {
+                "tags": [
+                    "Currency"
+                ],
+                "summary": "Set the exchange rate.",
+                "parameters": [
+                    {
+                        "name": "key",
+                        "in": "path",
+                        "description": "The unique currency key",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "rate",
+                        "in": "formData",
+                        "description": "Rate",
+                        "type": "number"
+                    },
+                    {
+                        "name": "title",
+                        "in": "formData",
+                        "description": "Currency name",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Currency item response"
+                    }
+                }
+            }
+        },
+        "/currency": {
+            "post": {
+                "tags": [
+                    "Currency"
+                ],
+                "summary": "Register a new currency.",
+                "parameters": [
+                    {
+                        "name": "key",
+                        "in": "formData",
+                        "description": "Unique currency key",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "rate",
+                        "in": "formData",
+                        "description": "Rate",
+                        "required": true,
+                        "type": "number"
+                    },
+                    {
+                        "name": "title",
+                        "in": "formData",
+                        "description": "Currency name",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Currency item response"
+                    },
+                    "default": {
+                        "description": "an \"unexpected\" error"
+                    }
+                }
+            }
+        },
+        "/country": {
+            "post": {
+                "tags": [
+                    "Country"
+                ],
+                "summary": "Register a new country.",
+                "parameters": [
+                    {
+                        "name": "key",
+                        "in": "formData",
+                        "description": "Unique country key",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "title",
+                        "in": "formData",
+                        "description": "Country title",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Country item response"
+                    },
+                    "default": {
+                        "description": "an \"unexpected\" error"
+                    }
+                }
+            }
+        },
+        "/city": {
+            "post": {
+                "tags": [
+                    "City"
+                ],
+                "summary": "Register a new city.",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "formData",
+                        "description": "City title",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "City item response"
+                    },
+                    "default": {
+                        "description": "an \"unexpected\" error"
+                    }
+                }
+            }
+        }
+    }
+}
